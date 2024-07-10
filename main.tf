@@ -22,6 +22,18 @@ module "databricks_workspace" {
   prefix                          = var.prefix
 }
 
+module "storage" {
+  source                          = "./storage"
+  azurerm_resource_group_name     = module.resource_group.resource_group_name
+  azurerm_location                = module.resource_group.resource_group_location
+  azure_databricks_workspace_name = var.azuredb_workspace_name
+  prefix = var.prefix
+   databricks_resource_id = module.databricks_workspace.azure_databricks_resource_id
+   databricks_workspace_workspace_id = module.databricks_workspace.databricks_workspace_id
+   databricks_workspace_workspace_url = module.databricks_workspace.databricks_workspace_host
+
+}
+
 # module "unitycatalog" {
 #   source                          = "./unitycatalog"
 #   depends_on = [ module.databricks_workspace ]
